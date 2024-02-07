@@ -1,119 +1,37 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import uuid from 'react-native-uuid';
-import ModalDeleteProducts from './src/components/ModalDeleteProducts.js';
-import AddProducts from './src/components/AddProducts.js';
-import ListContainer from './src/components/ListContainer.js';
+import { StyleSheet, Text, View } from 'react-native'
+import Home from './src/screens/Home.js'
+import { useEffect, useState } from 'react'
+import ProductsByCategory from "./src/screens/ProductsByCategory.js"
+import { useFonts } from "expo-font"
+import { fontCollection } from "./src/utils/global/fonts.js"
 
-const miApp = () => {
+const App = () => {
 
-  const [modalVisible, setModalVisible] = useState(false)
+  const [fontsLoaded] = useFonts(fontCollection)
 
-  const [productSelected, setProductSelected] = useState({})
+  const [categorySelected, setCategorySelected] = useState("")
 
-  const [productTitle, setProductTitle] = useState("")
+  if (!fontsLoaded) return null
 
-  const [productPrice, setProductPrice] = useState("")
-
-  const [products, setProducts] = useState([])
-
-  const onHandlerProductName = (name) => {
-    setProductTitle(name)
+  const selectedCategoryState = (category) => {
+    setCategorySelected(category)
   }
 
-  const onHandlerProductPrice = (price) => {
-    if (/^\d*\.?\d*$/.test(price)) {
-      setProductPrice(price);
-    } else {
-      console.log("Price is not a number")
-    }
-  };
-
-  const addProduct = () => {
-    if (productTitle && productPrice) {
-      const newProduct = {
-        productId: uuid.v4(),
-        createdAt: new Date().toLocaleString(),
-        updatedAt: new Date().toLocaleString(),
-        completed: false,
-        productName: productTitle,
-        productPrice: productPrice
-      };
-
-      setProducts([...products, newProduct]);
-
-      setProductTitle("");
-      setProductPrice("");
-
-    } else {
-      console.log("Please, complete labels correctly");
-    }
-  };
-
-  const onHandlerDeleteProduct = () => {
-    setProducts(products.filter(product => product.productId !== productSelected.productId))
-    setModalVisible(!modalVisible)
-  }
-
-  const onHandlerDeleteModal = (productSelected) => {
-    setProductSelected(productSelected)
-    setModalVisible(!modalVisible)
-
-  }
-
-  const onHanedlerSwitchCompletedButton = (id) => {
-    setProducts(products.map(product => {
-      if (product.id === id) return { ...product, ...{ completed: !product.completed } }
-      else return product
-    })
-    )
-
-  }
+  // La función del useEffect se ejecuta cuando elcomponente se renderiza y cuando cambia lo de adentro []
+  // useEffect( () => {console.log(categorySelected)}, [categorySelected])
 
   return (
 
-    <View style={styles.container}>
+    // Por más que sean pantallas siguen siendo componentes
 
-      <AddProducts
-        onHandlerProductName={onHandlerProductName}
-        productTitle={productTitle}
-        onHandlerProductPrice={onHandlerProductPrice}
-        productPrice={productPrice}
-        addProduct={addProduct} />
+    <>
 
-      <View style={styles.listContainer}>
+      {categorySelected ? <ProductsByCategory categorySelected={categorySelected} /> : <Home selectedCategoryState={selectedCategoryState} />}
 
-        <ListContainer
-          products={products}
-          onHandlerDeleteModal={onHandlerDeleteModal}
-          onHanedlerSwitchCompletedButton={onHanedlerSwitchCompletedButton} />
+    </>
+  )
+}
 
-        <ModalDeleteProducts
-          productSelected={productSelected}
-          onHandlerDeleteProduct={onHandlerDeleteProduct}
-          onHandlerDeleteModal={onHandlerDeleteModal}
-          modalVisible={modalVisible}
-        />
+export default App
 
-      </View>
-
-    </View >
-  );
-};
-
-export default miApp;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginTop: 22,
-    backgroundColor: '#FCAF14',
-  },
-  listContainer: {
-    flex: 1,
-    width: '100%',
-    paddingHorizontal: 15,
-  }
-});
+const styles = StyleSheet.create({})

@@ -1,4 +1,4 @@
-![Alt text](<src/public/img/Captura desde 2024-02-01 19-59-13.png>)
+a![Alt text](<src/public/img/Captura desde 2024-02-01 19-59-13.png>)
 
 .color1 { #22806b };
 .color2 { #a89f1d };
