@@ -26,7 +26,7 @@ const App = () => {
 
     <>
 
-      {categorySelected ? <ProductsByCategory categorySelected={categorySelected} /> : <Home selectedCategoryState={selectedCategoryState} />}
+      {categorySelected ? <ProductsByCategory categorySelected={categorySelected} setCategorySelected={setCategorySelected}/> : <Home selectedCategoryState={selectedCategoryState} />}
 
     </>
   )

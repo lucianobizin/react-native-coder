@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 
-const Header = ({title="Frutizia"}) => {
+const Header = ({title="Frutizia", HeaderStyle}) => {
   return (
-    <View style={styles.container}>
+    <View style={[HeaderStyle, styles.container]}>
       <Text style={styles.text}>{title}</Text>
     </View>
   )
