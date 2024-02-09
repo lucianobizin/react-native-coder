@@ -1,5 +1,6 @@
 import { StyleSheet, View, FlatList, Pressable, Text } from 'react-native'
-import products from "../utils/data/products.json"
+import categories from "../utils/data/categories_market.json"
+import products from "../utils/data/products_market.json"
 import Header from '../components/Header.js'
 import { useEffect, useState } from 'react'
 import ProductByCategory from '../components/ProductByCategory.js'
@@ -7,6 +8,8 @@ import Search from '../components/Search.js'
 import { AntDesign } from "@expo/vector-icons"
 
 const ProductsByCategory = ({ categorySelected, setCategorySelected }) => {
+
+  const [categoryProductsID, setCategoryProductsID] = useState([])
 
   const [productsFiltered, setProductsFiltered] = useState([])
 
@@ -17,7 +20,20 @@ const ProductsByCategory = ({ categorySelected, setCategorySelected }) => {
   }
 
   useEffect(() => {
-    if (categorySelected) setProductsFiltered(products.filter(product => product.category === categorySelected))
+    if (categorySelected) {
+   
+      // -- Traigo la categoria cuyo nombre sea categorySelected
+        const selectedCategory = Object.values(categories).find(category => String(category.name) === String(categorySelected))
+        
+        // Verificar si se encontró la categoría seleccionada y si tiene subcategorías
+        const subcategories = selectedCategory ? selectedCategory.subcategories : [];
+        
+        // Actualizar el estado de categoryProductsID
+        setCategoryProductsID(subcategories);
+
+        setProductsFiltered(categoryProductsID.map(catProductID => products[catProductID]));
+    }
+
     if (keyword) setProductsFiltered(productsFiltered.filter(product => {
 
       const productTitleLower = product.title.toLowerCase()
@@ -26,7 +42,7 @@ const ProductsByCategory = ({ categorySelected, setCategorySelected }) => {
       return productTitleLower.includes(keywordLower)
     }
     ))
-  }, [categorySelected, keyword])
+  }, [categorySelected, categoryProductsID, keyword])
 
   const goBack = () => {
     setCategorySelected("")

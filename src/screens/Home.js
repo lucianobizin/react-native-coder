@@ -8,7 +8,7 @@ const Home = ({selectedCategoryState}) => {
     return (
         <View>
             <Header
-                title={'Frutizia'} />
+                title={'FRUTIZIA'} />
             <Categories
             selectedCategoryState={selectedCategoryState}/>
 

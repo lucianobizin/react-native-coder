@@ -1,12 +1,15 @@
 import { StyleSheet, FlatList, Dimensions } from 'react-native'
-import categories from "../utils/data/categories.json"
+import categories from "../utils/data/categories_market.json"
 import CardCategory from './CardCategory'
 
 
 const Categories = ({selectedCategoryState}) => {
+
+    const categoryNames = Object.values(categories).map(category => category.name)
+
     return (
         <FlatList
-            data={categories}
+            data={categoryNames}
             numColumns={2}
             keyExtractor={item => item}
             renderItem={({ item }) => (
