@@ -32,11 +32,13 @@ const ProductsByCategory = ({ categorySelected, setCategorySelected }) => {
         setCategoryProductsID(subcategories);
 
         setProductsFiltered(categoryProductsID.map(catProductID => products[catProductID]));
+
+        console.log(productsFiltered)
     }
 
     if (keyword) setProductsFiltered(productsFiltered.filter(product => {
 
-      const productTitleLower = product.title.toLowerCase()
+      const productTitleLower = product.name.toLowerCase()
       const keywordLower = keyword.toLowerCase()
 
       return productTitleLower.includes(keywordLower)
