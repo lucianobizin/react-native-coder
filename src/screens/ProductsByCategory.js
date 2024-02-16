@@ -6,7 +6,7 @@ import ProductByCategory from '../components/ProductByCategory.js'
 import Search from '../components/Search.js'
 import { AntDesign } from "@expo/vector-icons"
 
-const ProductsByCategory = ({ categorySelected, setCategorySelected }) => {
+const ProductsByCategory = ({ categorySelected, setCategorySelected, selectProductId }) => {
 
   const [productsFiltered, setProductsFiltered] = useState([])
 
@@ -45,7 +45,7 @@ const ProductsByCategory = ({ categorySelected, setCategorySelected }) => {
       <FlatList
         data={productsFiltered}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <ProductByCategory item={item} />}
+        renderItem={({ item }) => <ProductByCategory selectProductId={selectProductId} item={item} />}
 
       />
     </>

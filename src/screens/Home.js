@@ -6,13 +6,13 @@ import Categories from '../components/Categories.js'
 const Home = ({selectedCategoryState}) => {
 
     return (
-        <View>
+        <>
             <Header
                 title={'Frutizia'} />
             <Categories
             selectedCategoryState={selectedCategoryState}/>
 
-        </View>
+        </>
     )
 }
 
