@@ -6,7 +6,9 @@ import ProductByCategory from '../components/ProductByCategory.js'
 import Search from '../components/Search.js'
 import { AntDesign } from "@expo/vector-icons"
 
-const ProductsByCategory = ({ categorySelected, setCategorySelected }) => {
+const ProductsByCategory = ({navigation, route }) => {
+
+  const {categorySelected} = route.params
 
   const [productsFiltered, setProductsFiltered] = useState([])
 
@@ -34,18 +36,12 @@ const ProductsByCategory = ({ categorySelected, setCategorySelected }) => {
 
   return (
     <>
-      <View style={styles.headerContainer}>
-        <Pressable style={styles.goBackRowContainer} onPress={goBack}>
-          <AntDesign style={styles.goBackRowButton} name="doubleleft" size={35} color={"black"} />
-        </Pressable>
-        <Header HeaderStyle={styles.header} title={categorySelected || "Productos"} />
-        <View style={styles.emptyView}></View>
-      </View>
+    
       <Search handlerKeyword={handlerKeyword} />
       <FlatList
         data={productsFiltered}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <ProductByCategory item={item} />}
+        renderItem={({ item }) => <ProductByCategory item={item} navigation={navigation}/>}
 
       />
     </>

@@ -3,16 +3,14 @@ import Header from '../components/Header'
 import Categories from '../components/Categories.js'
 
 
-const Home = ({selectedCategoryState}) => {
+const Home = ({navigation}) => {
 
     return (
-        <View>
-            <Header
-                title={'Frutizia'} />
-            <Categories
-            selectedCategoryState={selectedCategoryState}/>
+        <>
+        
+            <Categories navigation={navigation}/>
 
-        </View>
+        </>
     )
 }
 

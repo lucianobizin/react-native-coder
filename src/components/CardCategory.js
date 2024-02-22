@@ -3,11 +3,11 @@ import ShadowPrimary from './wrappers/ShadowPrimary.js'
 import colors from '../utils/global/colors.js'
 import fonts from '../utils/global/fonts.js'
 
-const CardCategory = ({ item, cardContainer, selectedCategoryState }) => {
+const CardCategory = ({ item, cardContainer, navigation }) => {
     return (
         
         // Todo lo que escriba dentro de ShadowPrimary este componente lo recibe como "children"
-        <Pressable onPress={() => selectedCategoryState(item)}>
+        <Pressable onPress={() => navigation.navigate("ProductsByCategory", {categorySelected: item})}>
             <ShadowPrimary style={[cardContainer, styles.container]}>
                 <Text style={styles.text}>{item}</Text>
             </ShadowPrimary>

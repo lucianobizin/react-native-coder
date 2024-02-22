@@ -1,8 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Pressable } from 'react-native'
+import {AntDesign} from "@expo/vector-icons"
 
-const Header = ({title="Frutizia", HeaderStyle}) => {
+const Header = ({title="Frutizia", HeaderStyle, navigation}) => {
   return (
     <View style={[HeaderStyle, styles.container]}>
+      {navigation.canGoBack() &&
+            <Pressable style={styles.goBack} onPress={() => navigation.goBack()}>
+            <AntDesign name="arrowleft" size={25} color="black"/>
+          </Pressable>}
       <Text style={styles.text}>{title}</Text>
     </View>
   )
@@ -16,10 +21,16 @@ const styles = StyleSheet.create({
         height: 80,
         width: "100%",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        position: "relative"
     },
     text: {
         fontSize: 24
+    },
+    goBack: {
+      position: "absolute",
+      left: 10,
+      bottom: 15
     }
 
 })

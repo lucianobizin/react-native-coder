@@ -1,15 +1,17 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, useWindowDimensions, Pressable } from 'react-native'
 import colors from '../utils/global/colors.js'
 
 
-const ProductByCategory = ({item}) => {
+const ProductByCategory = ({item, navigation}) => {
 
     // Si la img en local => source={require("../../..etc")}
+
+    const {width, height} = useWindowDimensions()
     return (
-        <View style={styles.container}>
+        <Pressable style={styles.container} onPress={() => navigation.navigate("ProductDetail", {productId: item.id})}>
             <Image style={styles.image} source={{uri: item.thumbnail}} resizeMode='cover'/>
-            <Text style={styles.text}>{item.id} {item.title}</Text>
-        </View>
+            <Text style={[styles.text, width > 490 ? {fontSize:24} : {fontSize: 16}]}>{item.id} {item.title}</Text>
+        </Pressable>
     )
 }
 
@@ -32,8 +34,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     image:{
-        width: 90,
-        height: 90,
+        minWidth: 90,
+        minHeight: 90,
         borderRadius: 5
     }
 })
