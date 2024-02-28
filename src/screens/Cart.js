@@ -1,9 +1,15 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native'
-import cart from "../utils/data/cart.json"
+// import cart from "../utils/data/cart.json"
 import CartItem from "../components/CartItem.js"
 import fonts from '../utils/global/fonts.js'
 
+import { useSelector } from 'react-redux'
+
 const Cart = () => {
+
+  // Trae el estado del carro y lo guarda en una variable
+  const cart = useSelector((state) => state.cart)
+
   return (
     <View style={styles.container}>
       <FlatList

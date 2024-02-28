@@ -1,10 +1,8 @@
-import { StyleSheet, View, FlatList, Pressable, Text } from 'react-native'
+import { StyleSheet, FlatList } from 'react-native'
 import products from "../utils/data/products.json"
-import Header from '../components/Header.js'
 import { useEffect, useState } from 'react'
 import ProductByCategory from '../components/ProductByCategory.js'
 import Search from '../components/Search.js'
-import { AntDesign } from "@expo/vector-icons"
 
 const ProductsByCategory = ({navigation, route }) => {
 
