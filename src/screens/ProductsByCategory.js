@@ -1,12 +1,14 @@
-import { StyleSheet, FlatList } from 'react-native'
-import products from "../utils/data/products.json"
+import { StyleSheet, FlatList, View, Text } from 'react-native'
 import { useEffect, useState } from 'react'
 import ProductByCategory from '../components/ProductByCategory.js'
 import Search from '../components/Search.js'
+import { useGetProductsByCategoryQuery } from '../app/services/shop.js'
 
 const ProductsByCategory = ({navigation, route }) => {
 
   const {categorySelected} = route.params
+
+  const {data: products, isError, isLoading, isSuccess, error} = useGetProductsByCategoryQuery(categorySelected)
 
   const [productsFiltered, setProductsFiltered] = useState([])
 
@@ -17,7 +19,8 @@ const ProductsByCategory = ({navigation, route }) => {
   }
 
   useEffect(() => {
-    if (categorySelected) setProductsFiltered(products.filter(product => product.category === categorySelected))
+    
+    setProductsFiltered(products)
     if (keyword) setProductsFiltered(productsFiltered.filter(product => {
 
       const productTitleLower = product.title.toLowerCase()
@@ -26,18 +29,16 @@ const ProductsByCategory = ({navigation, route }) => {
       return productTitleLower.includes(keywordLower)
     }
     ))
-  }, [categorySelected, keyword])
+  }, [categorySelected, keyword, products]) // Si cambia alguno de estos que ejecute la función de nuevo
 
-  const goBack = () => {
-    setCategorySelected("")
-  }
+  if(isLoading) return <View><Text>Loading...</Text></View>
 
   return (
     <>
     
       <Search handlerKeyword={handlerKeyword} />
       <FlatList
-        data={productsFiltered}
+        data={products}
         keyExtractor={item => item.id}
         renderItem={({ item }) => <ProductByCategory item={item} navigation={navigation}/>}
 

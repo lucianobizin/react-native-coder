@@ -1,22 +1,25 @@
-import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
-import products from "../utils/data/products.json"
-import { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Pressable, Image, ActivityIndicator } from 'react-native'
+import { useGetProductQuery } from '../app/services/shop.js'
 import colors from '../utils/global/colors.js'
 import { useDispatch } from 'react-redux'
 import { addCartItem } from '../features/cart/cartSlice.js'
 
 const ProductDetail = ({ route }) => {
 
-  const [product, setProduct] = useState({})
-
   const {productId} = route.params
 
-  useEffect(() => {
-    const productFound = products.find(product => product.id === productId)
-    setProduct(productFound)
-  }, [productId])
+  const {data: product, isLoading} = useGetProductQuery(productId)
 
   const dispatch = useDispatch()
+
+  if(isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Loading...</Text>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -110,5 +113,10 @@ const styles = StyleSheet.create({
   },
   buyNowText: {
     color: "white"
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
